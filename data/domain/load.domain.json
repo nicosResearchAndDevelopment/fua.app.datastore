@@ -1,0 +1,27 @@
+{
+  "@context": "fua.load.rdf",
+  "dct:identifier": "./load.domain.json",
+  "dct:format": "application/fua.load+json",
+  "dct:title": "load.domain.json",
+  "dct:alternative": "Testbed Domain Loader",
+  "dct:requires": [
+    {
+      "dct:identifier": "./domain.ttl",
+      "dct:format": "text/turtle",
+      "dct:title": "domain.ttl",
+      "dct:alternative": "Testbed-Server Domain"
+    },
+    {
+      "dct:identifier": "./users/daps.ttl",
+      "dct:format": "text/turtle",
+      "dct:title": "daps.ttl",
+      "dct:alternative": "User: DAPS"
+    },
+    {
+      "dct:identifier": "./groups/admin.ttl",
+      "dct:format": "text/turtle",
+      "dct:title": "admin.ttl",
+      "dct:alternative": "Group: Admin"
+    }
+  ]
+}
