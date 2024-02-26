@@ -1,0 +1,30 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:   <https://www.example.org/> .
+
+ex:Test
+    a               owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label      "Test" ;
+.
+
+ex:test
+    a           owl:ObjectProperty ;
+    rdfs:domain ex:Test ;
+    rdfs:range  ex:Test ;
+    rdfs:label  "test" ;
+.
+
+ex:hello
+    a          ex:Test ;
+    rdfs:label "Hello World!"@en ;
+    rdfs:label "Hallo Welt!"@de ;
+    ex:test    ex:lorem ;
+.
+
+ex:lorem
+    a          ex:Test ;
+    rdfs:label "Lorem Ipsum"@la ;
+.
