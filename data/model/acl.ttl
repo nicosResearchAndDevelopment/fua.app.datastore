@@ -7,8 +7,6 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
-# SEE https://solid.github.io/web-access-control-spec/
-
 acl:Access
     a            rdfs:Class ;
     rdfs:label   "access"@en ;

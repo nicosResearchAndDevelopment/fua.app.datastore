@@ -7,16 +7,16 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
-_:n0
+[
     a            acl:Authorization ;
-    acl:accessTo <> ;
-    acl:mode     acl:Read, acl:Write ;
+    acl:accessTo <example> ;
+    acl:mode     acl:Read, acl:Write, acl:Control ;
     acl:agent    <https://tb.nicos-rd.com/>
-.
+] .
 
-_:n1
+[
     a            acl:Authorization ;
-    acl:accessTo <> ;
+    acl:accessTo <example> ;
     acl:mode     acl:Read, acl:Write ;
     acl:agent    <https://daps.tb.nicos-rd.com/>
-.
+] .
