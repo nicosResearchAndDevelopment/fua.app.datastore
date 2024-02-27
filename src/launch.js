@@ -13,7 +13,7 @@ App.launch({
     },
     config: {
         datastore: {
-            baseUrl:  'https://data.tb.nicos-rd.com/',
+            baseURI:  'https://data.tb.nicos-rd.com/',
             dataRoot: path.join(__dirname, '../data/root') // TEMP
         }
     },

@@ -19,7 +19,7 @@ const
     context                               = require('@nrd/fua.resource.context'),
     persist                               = require('@nrd/fua.module.persistence');
 
-_DataStore.baseUrl     = 'http://localhost/';
+_DataStore.baseURI     = 'http://localhost/';
 _DataStore.dataRoot    = '/var/opt/fua/data';
 _DataStore.dataFactory = new persist.DataFactory(context);
 _DataStore.contentType = 'text/turtle';
@@ -36,8 +36,8 @@ DataStore.initialize = async function (options = {}) {
     const dataRootStats = await fs.stat(_DataStore.dataRoot);
     assert(dataRootStats.isDirectory(), 'not a directory');
 
-    if (is.string(options.baseUrl)) _DataStore.baseUrl = options.baseUrl;
-    assert(is.string(_DataStore.baseUrl) && strings.web.url.test(_DataStore.baseUrl), 'invalid baseUrl');
+    if (is.string(options.baseURI)) _DataStore.baseURI = options.baseURI;
+    assert(is.string(_DataStore.baseURI) && strings.web.url.test(_DataStore.baseURI), 'invalid baseURI');
 
     return DataStore;
 };
@@ -54,17 +54,27 @@ _DataStore.queueAccess = async function (filePath, accessTask) {
     }
 };
 
-DataStore.getDataset = async function (file) {
+_DataStore.extractBaseURI = function (urlPath) {
+    const url = new URL(urlPath, _DataStore.baseURI);
+    return url.protocol + '//' + url.hostname
+        + (url.pathname.endsWith('/index') ? url.pathname.slice(0, -5) : url.pathname)
+        + (url.pathname.endsWith('/') ? '' : '#');
+};
+
+_DataStore.extractPath = function (urlPath) {
+    const url = new URL(urlPath, _DataStore.baseURI);
+    return path.join(_DataStore.dataRoot, url.pathname + (url.pathname.endsWith('/') ? 'index' : '') + _DataStore.fileEnding);
+};
+
+DataStore.getDataset = async function (urlPath) {
     assert(_DataStore.initialized, 'not initialized');
-    assert.string(file);
-    const filePath = path.join(_DataStore.dataRoot, file.replace(/^\/|\/$/g, '') + _DataStore.fileEnding);
+    assert.string(urlPath, strings.web.url.path.pattern);
+    const filePath = _DataStore.extractPath(urlPath);
     assert(!path.relative(_DataStore.dataRoot, filePath).startsWith('..'), 'expected filePath to be inside dataRoot');
+    const baseURI = _DataStore.extractBaseURI(urlPath);
     return await _DataStore.queueAccess(filePath, async () => {
         await fs.access(filePath);
-        const textStream = createReadStream(filePath);
-        // textStream.on('error', console.error);
-        const quadStream = rdf.parseStream(textStream, _DataStore.contentType, _DataStore.dataFactory, _DataStore.baseUrl);
-        // quadStream.on('error', console.error);
+        const quadStream = rdf.parseStream(createReadStream(filePath), _DataStore.contentType, _DataStore.dataFactory, baseURI);
         const dataset    = new persist.Dataset(null, _DataStore.dataFactory);
         await dataset.addStream(quadStream);
         return dataset;

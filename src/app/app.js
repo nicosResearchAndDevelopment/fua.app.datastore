@@ -7,14 +7,17 @@ const
 
 module.exports = async function ({server: {app, io}, datastore, ...config}) {
 
+    app.enable('strict routing');
+    app.enable('case sensitive routing');
+
     app.use(function (request, response, next) {
         tty.log.request(request);
         next();
     });
 
-    app.get('/*', async function (request, response) {
+    app.get('*', async function (request, response) {
         try {
-            if (request.url === '/') throw new errors.http.RequestError(404, request);
+            // if (request.url === '/') throw new errors.http.RequestError(404, request);
             const contentType = request.accepts(rdf.contentTypes);
             if (!contentType) throw new errors.http.RequestError(406, request);
             const dataset = await datastore.getDataset(request.url);
