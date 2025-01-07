@@ -1,9 +1,9 @@
 const
-    assert = require('@nrd/fua.core.assert'),
-    is     = require('@nrd/fua.core.is'),
-    tty    = require('@nrd/fua.core.tty'),
-    rdf    = require('@nrd/fua.module.rdf'),
-    errors = require('@nrd/fua.core.errors');
+    assert = require('@fua/core.assert'),
+    is     = require('@fua/core.is'),
+    tty    = require('@fua/core.tty'),
+    rdf    = require('@fua/module.rdf'),
+    errors = require('@fua/core.errors');
 
 module.exports = async function ({server: {app, io}, datastore, ...config}) {
 

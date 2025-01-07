@@ -1,23 +1,23 @@
 const
     DataStore          = exports,
     {name: identifier} = require('../../package.json'),
-    assert             = require('@nrd/fua.core.assert');
+    assert             = require('@fua/core.assert');
 
 assert(!global[identifier], 'unable to load a second uncached version of the singleton ' + identifier);
 Object.defineProperty(global, identifier, {value: DataStore, configurable: false, writable: false, enumerable: false});
 
 const
     _DataStore                            = Object.create(null),
-    is                                    = require('@nrd/fua.core.is'),
-    strings                               = require('@nrd/fua.core.strings'),
+    is                                    = require('@fua/core.is'),
+    strings                               = require('@fua/core.strings'),
     path                                  = require('path'),
     fs                                    = require('fs/promises'),
     {createReadStream, createWriteStream} = require('fs'),
-    async                                 = require('@nrd/fua.core.async'),
-    errors                                = require('@nrd/fua.core.errors'),
-    rdf                                   = require('@nrd/fua.module.rdf'),
-    context                               = require('@nrd/fua.resource.context'),
-    persist                               = require('@nrd/fua.module.persistence');
+    async                                 = require('@fua/core.async'),
+    errors                                = require('@fua/core.errors'),
+    rdf                                   = require('@fua/module.rdf'),
+    context                               = require('@fua/resource.context'),
+    persist                               = require('@fua/module.persistence');
 
 _DataStore.baseURI     = 'http://localhost/';
 _DataStore.dataRoot    = '/var/opt/fua/data';

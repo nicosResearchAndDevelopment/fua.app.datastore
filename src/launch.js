@@ -2,7 +2,7 @@
 
 const
     path      = require('path'),
-    App       = require('@nrd/fua.agent.app'),
+    App       = require('@fua/agent.app'),
     DataStore = require('./app/datastore.js');
 
 App.launch({
@@ -28,7 +28,7 @@ App.launch({
                         'dct:identifier': path.join(__dirname, '../data/load.json'),
                         'dct:format':     'application/fua.load+json'
                     },
-                    require('@nrd/fua.resource.ontology.core')
+                    require('@fua/resource.ontology.core')
                 ]
             }
         }
@@ -47,7 +47,7 @@ App.launch({
         app:     true,
         io:      true,
         session: {
-            secret:            '@nrd/fua.app.datastore',
+            secret:            '@fua/app.datastore',
             resave:            false,
             saveUninitialized: false
         }

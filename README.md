@@ -1,4 +1,4 @@
-# @nrd/fua.app.datastore
+# @fua/app.datastore
 
 ## Web Access Control
 
